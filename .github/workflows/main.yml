@@ -24,7 +24,7 @@ jobs:
           Start-Process "msiexec.exe" -ArgumentList "/i", "chrome_remote_desktop_host.msi", "/quiet" -Wait
       - name: 3
         run: |
-         & "${Env:PROGRAMFILES(X86)}\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AUJR-x45YRYyD49604RgsCE0hGykuC9gxQtc5hgPdQiQT8_aiRAvtocmiuA6ld8-HwXWrg" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME  --pin=111111
+         & "${Env:PROGRAMFILES(X86)}\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AUJR-x5IQZOE5ykvDalnjmv5ZHXygTwHU95Gqo-R_x4H2l5srnJDfXhfEPxqgp_3R7oBZg" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME   --pin=111111
       - name: Wait
         run: Start-Sleep -Seconds 2147483
       - name: Wait2
