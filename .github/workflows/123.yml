@@ -1,4 +1,4 @@
-name: test error 2
+name: test error
 
 on:
   workflow_dispatch:
@@ -15,26 +15,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: 1 -
+      - name: 1 - 
         run: |
           Invoke-WebRequest -Uri "https://dl.google.com/chrome/install/standalonesetup64.exe" -OutFile "chrome_setup.exe"
-          Start-Process "chrome_setup.exe" -ArgumentList "/silent /install" -Wait
+          Start-Process "chrome_setup.exe" -ArgumentList "/silent /install" -NoNewWindow
 
       - name: 2 - 
         run: |
           Invoke-WebRequest -Uri "https://dl.google.com/edgedl/chrome-remote-desktop/chromeremotedesktophost.msi" -OutFile "chrome_remote_desktop_host.msi"
-          Start-Process "msiexec.exe" -ArgumentList "/i", "chrome_remote_desktop_host.msi", "/quiet" -Wait
+          Start-Process "msiexec.exe" -ArgumentList "/i", "chrome_remote_desktop_host.msi", "/quiet" -NoNewWindow
 
-      - name: 2.5 - 
+      - name: 2.5 
         run: |
-          Start-Process ".\BlueStacksInstaller_5.22.100.1024_native_1c52247a23e7bc367e286417a4deab16_MTsxNQ==.exe" -ArgumentList "--defaultImageName", "Nougat64", "--imageToLaunch", "Nougat64" -Wait
+          Start-Process ".\BlueStacksInstaller_5.22.100.1024_native_1c52247a23e7bc367e286417a4deab16_MTsxNQ==.exe" -ArgumentList "--defaultImageName", "Nougat64", "--imageToLaunch", "Nougat64" -NoNewWindow
 
       - name: 3 - 
         run: |
-          & "${Env:PROGRAMFILES(X86)}\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AVMBsJgDOR_bXZ7BQFMGyPPTn-fu_wjXbNxLegvquso7pWrpiM0X3wr9gTnjAzsFTkCSXQ" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME --pin=111111
-
-      - name: Wait
-        run: Start-Sleep -Seconds 2147483
-
-      - name: Wait2
-        run: Start-Sleep -Seconds 2147483
+          & "${Env:PROGRAMFILES(X86)}\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AVMBsJgn697VzPTyiBhofRLJGjoNkccbmpHYqzek0TNULD5fA-GsAFVPGlYtH0OJm7Vf1Q" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME --pin=111111
