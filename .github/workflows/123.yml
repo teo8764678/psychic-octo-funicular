@@ -1,7 +1,7 @@
-name: test error
+name: test error 2
 
 on:
-  workflow_dispatch: # Vẫn cho phép chạy thủ công
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -15,24 +15,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: 1 
+      - name: 1 -
         run: |
           Invoke-WebRequest -Uri "https://dl.google.com/chrome/install/standalonesetup64.exe" -OutFile "chrome_setup.exe"
           Start-Process "chrome_setup.exe" -ArgumentList "/silent /install" -Wait
 
-      - name: 2 
+      - name: 2 - 
         run: |
           Invoke-WebRequest -Uri "https://dl.google.com/edgedl/chrome-remote-desktop/chromeremotedesktophost.msi" -OutFile "chrome_remote_desktop_host.msi"
           Start-Process "msiexec.exe" -ArgumentList "/i", "chrome_remote_desktop_host.msi", "/quiet" -Wait
 
-      - name: 2.5 
+      - name: 2.5 - 
         run: |
-          Invoke-WebRequest -Uri "https://cdn.bluestacks.com/BlueStacksFullInstaller_5.22.91.1029_amd64_native.exe" -OutFile "BlueStacksFullInstaller_5.22.91.1029_amd64_native.exe"
-          Start-Process "BlueStacksFullInstaller_5.22.91.1029_amd64_native.exe" -ArgumentList "--defaultImageName", "Nougat64", "--imageToLaunch", "Nougat64" -Wait
+          Start-Process ".\BlueStacksInstaller_5.22.100.1024_native_1c52247a23e7bc367e286417a4deab16_MTsxNQ==.exe" -ArgumentList "--defaultImageName", "Nougat64", "--imageToLaunch", "Nougat64" -Wait
 
-      - name: 3 
+      - name: 3 - 
         run: |
-          & "${Env:PROGRAMFILES(X86)}\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AVMBsJhdiel5hN9-YuJkgFv3MtW7KsKwuefSyv_guyvdt-7SmX3u_K0LKuRmpO-PNOV90Q" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME --pin=111111
+          & "${Env:PROGRAMFILES(X86)}\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AVMBsJgDOR_bXZ7BQFMGyPPTn-fu_wjXbNxLegvquso7pWrpiM0X3wr9gTnjAzsFTkCSXQ" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME --pin=111111
 
       - name: Wait
         run: Start-Sleep -Seconds 2147483
