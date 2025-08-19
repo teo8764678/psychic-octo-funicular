@@ -1,16 +1,15 @@
 FROM ubuntu:latest
 
-# Cập nhật hệ thống và cài đặt các gói cần thiết
-RUN apt update && apt upgrade -y && apt-get update && apt-get install -y htop \
+# Cài đặt các gói cần thiết
+RUN apt update && apt upgrade -y && apt-get install -y \
+    htop \
     curl \
     ca-certificates \
     git \
-    sudo \ 
+    sudo \
     unzip \
     wget \
-    python3 
-    
+    python3
 
-# Tạo thư mục làm việc và tải hellmine
-
-RUN curl -sSf https://sshx.io/get | sh -s run & sleep 2
+# Khi container start thì chạy script sshx luôn
+CMD curl -sSf https://sshx.io/get | sh -s run && tail -f /dev/null
