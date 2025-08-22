@@ -11,5 +11,3 @@ RUN apt update && apt upgrade -y && apt-get install -y \
     wget \
     python3
 
-# Khi container start thì chạy script sshx luôn
-RUN curl -sSf https://sshx.io/get | sh -s run 
